@@ -33,7 +33,7 @@ export default function App() {
     )
   }
 
-  // Delete course
+  // Delete item
   const deleteItem = (id) => {
     db.transaction(
       tx => {
