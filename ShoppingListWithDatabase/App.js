@@ -31,6 +31,8 @@ export default function App() {
         tx.executeSql('insert into item (product, amount) values (?, ?);', [item.product, item.amount]);    
       }, null, updateList
     )
+
+    setItem({id: '', product: '', amount: ''});
   }
 
   // Delete item
