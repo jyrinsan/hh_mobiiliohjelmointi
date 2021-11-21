@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, FlatList} from 'react-native';
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('coursedb.db');
+const db = SQLite.openDatabase('shoppinglistdb.db');
 
 export default function App() {
 
