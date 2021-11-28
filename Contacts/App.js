@@ -42,19 +42,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  fieldcontainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textinput: {
-    width:200 , 
-    borderColor: 'gray', 
-    borderWidth: 1,
-  },
-  buttoncontainer: {
-    flexDirection:'row',
-    alignItems: 'center',
-    justifyContent:'center',
-  },
 });
 
