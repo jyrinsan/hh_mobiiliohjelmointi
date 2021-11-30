@@ -5,8 +5,7 @@ import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('myplacesdb.db');
 
-export default function PlaceFinderScreen({route, navigation}) {
-  
+export default function PlaceFinderScreen({navigation}) {
   const [address, setAddress] = useState('');
   const [data, setData] = useState([]);
 
@@ -14,7 +13,8 @@ export default function PlaceFinderScreen({route, navigation}) {
     db.transaction(tx => {
       tx.executeSql('create table if not exists places (id integer primary key not null, address text);');
     });
-    updateList();   
+    updateList();  
+    console.log("useEffect") 
     }, []);
 
   const updateList = () => {
@@ -64,11 +64,11 @@ export default function PlaceFinderScreen({route, navigation}) {
             keyExtractor={item => item.id}
             data={data} 
             renderItem={({item}) => (
-              <ListItem bottomDivider onLongPress={() => deleteAddress(item.id)}> 
+              <ListItem bottomDivider onPress={() => navigateAddress(false, item.address)} onLongPress={() => deleteAddress(item.id)}> 
                 <ListItem.Content>
                   <ListItem.Title>{item.address}</ListItem.Title>
                 </ListItem.Content>
-                <ListItem.Subtitle onPress={() => navigateAddress(false, item.address)}>Show on map</ListItem.Subtitle>
+                <ListItem.Subtitle>Show on map</ListItem.Subtitle>
                 <ListItem.Chevron />
               </ListItem>
               )} />

@@ -38,15 +38,16 @@ export default function MapScreen({ route, navigation}) {
       })
     })
     .catch (err=> Alert.alert('Error', err ))  
+
     }, []);
 
   const save = ()  => {
     db.transaction(tx => {
         tx.executeSql('insert into places (address) values (?);',[address]);    
-      }, null, updateList)
+      }, null)
 
-      updateList();
       setButtonEnbled(false)
+      updateList();
   }
 
   return (
