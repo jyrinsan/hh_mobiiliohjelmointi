@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, StatusBar, View, Button, TextInput, Alert} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import * as Location from'expo-location';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('myplacesdb.db');
 
 export default function MapScreen({ route, navigation}) {
 
-  const { address, updateList } = route.params;
+  const { saveEnabled, address, updateList } = route.params;
+
+  const [buttonEnabled, setButtonEnbled] = useState(saveEnabled);
 
   const [region, setRegion] = useState({
     latitude: 60.200692,
@@ -45,6 +46,7 @@ export default function MapScreen({ route, navigation}) {
       }, null, updateList)
 
       updateList();
+      setButtonEnbled(false)
   }
 
   return (
@@ -59,7 +61,9 @@ export default function MapScreen({ route, navigation}) {
           title='Haaga-Helia'
         />
       </MapView>
-      <Button title="SAVE LOCATION" onPress={save} />
+      <View style={styles.buttoncontainer}>
+        <Button disabled={!buttonEnabled} title="SAVE LOCATION" onPress={save} />
+      </View>
     </View>
   );
 }
@@ -74,5 +78,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%"
-  }
+  },
+  buttoncontainer: {
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent:'center',
+  },
 });

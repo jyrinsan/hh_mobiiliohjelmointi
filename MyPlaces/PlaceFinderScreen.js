@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, FlatList, Alert } from 'react-native';
-import{ Input, Button, ListItem} from 'react-native-elements';
+import{ Input, Button, ListItem, Icon} from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('myplacesdb.db');
 
-export default function PlaceFinderScreen({navigation}) {
+export default function PlaceFinderScreen({route, navigation}) {
   
   const [address, setAddress] = useState('');
   const [data, setData] = useState([]);
@@ -20,7 +20,6 @@ export default function PlaceFinderScreen({navigation}) {
   const updateList = () => {
     db.transaction(tx => {
       tx.executeSql('select * from places;', [], (_, { rows }) => {
-        console.log("löytyi tallennettuja rivejä", rows._array)
         setData(rows._array)
       }
       ); 
@@ -45,6 +44,10 @@ export default function PlaceFinderScreen({navigation}) {
       ])
   }
 
+  const navigateAddress = (saveEnabled, address)  => {
+    navigation.navigate('Map', {saveEnabled, address, updateList});
+  }
+
   return (
     <View style={styles.container}>
         <View style={styles.fieldcontainer}>
@@ -53,7 +56,7 @@ export default function PlaceFinderScreen({navigation}) {
         <View style={styles.buttoncontainer}>
           <Button 
             raised title="SHOW ON MAP" 
-            onPress={() => navigation.navigate('Map', {address, updateList})} 
+            onPress={() => navigateAddress(true, address)} 
           />
           </View>
           <View>
@@ -65,6 +68,8 @@ export default function PlaceFinderScreen({navigation}) {
                 <ListItem.Content>
                   <ListItem.Title>{item.address}</ListItem.Title>
                 </ListItem.Content>
+                <ListItem.Subtitle onPress={() => navigateAddress(false, item.address)}>Show on map</ListItem.Subtitle>
+                <ListItem.Chevron />
               </ListItem>
               )} />
         </View>
