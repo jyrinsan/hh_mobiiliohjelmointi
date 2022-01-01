@@ -1,13 +1,29 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, StatusBar, View, TextInput, Alert, FlatList} from 'react-native';
-import { Input, Button, ListItem, Avatar } from 'react-native-elements';
+import { StyleSheet, StatusBar, View, Text, FlatList } from 'react-native';
+import { Input, Button, ListItem, Avatar, Icon } from 'react-native-elements';
+import * as SQLite from 'expo-sqlite';
 
-export default function ResultsScreen({ route, navigation}) {
+const db = SQLite.openDatabase('makeupdb.db');
 
-  const { responseData } = route.params;
+export default function FavoriteScreen({ route, navigation}) {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    updateList();
+  });
+
+  const updateList = () => {
+    db.transaction(tx => {
+      tx.executeSql('select * from favorites;', [], (_, { rows }) => {
+        setData(rows._array);
+        }
+      ); 
+    });
+  }
 
   const navigateToProductScreen = (id) => {
-    responseData.map((item) => {
+    data.map((item) => {
       item.id === id ? navigation.navigate('Product', {item}) : '';
     })
   }
@@ -15,10 +31,10 @@ export default function ResultsScreen({ route, navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.buttoncontainer}>
-      {responseData &&
+      {data &&
       <FlatList 
             keyExtractor={item => item.id}
-            data={responseData} 
+            data={data} 
             renderItem={({item}) => (
               <ListItem bottomDivider onPress={() => navigateToProductScreen(item.id)}> 
                 <Avatar

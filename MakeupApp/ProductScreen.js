@@ -4,36 +4,37 @@ import { Input, Button, ListItem, Avatar, Icon } from 'react-native-elements';
 import { WebView} from 'react-native-webview'
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('myplacesdb.db');
+const db = SQLite.openDatabase('makeupdb.db');
 
 export default function ProductScreen({ route, navigation}) {
 
   const { item } = route.params;
   const [favorite, setFavorite] = useState(false);
 
-  useEffect(() =>{
+  useEffect(() => {
+    findFavorite();
+  }, []);
+
+  const findFavorite = () => {
     db.transaction(tx => {
-      tx.executeSql('create table if not exists favorites (id integer primary key not null, itemId integer, name text);');
+      tx.executeSql('select count(*) as lkm from favorites where id=?;', [item.id], (_, {rows}) => {
+        console.log("oliko tämä product favorite", rows._array[0].lkm>0);
+        setFavorite(rows._array[0].lkm>0)
+        }, () => console.log('find error'), () => console.log('find onnistui')
+      ); 
     });
-
-    updateList();
-    }, []);
-
-    const updateList = () => {
-      db.transaction(tx => {
-        tx.executeSql('select * from favorites where itemId=?', [item.id], (_, { rows }) => {
-          //setData(rows._array)
-          console.log("löytyi favoriteja", rows._array)
-        }
-        ); 
-      });
-    }
-
+  }
+  
   const saveFavorite = (favo) => {
-    console.log(`saving item id: ${item.id}, name: ${item.name} to favorites`)
+    if (favo) {
     db.transaction(tx => {
-      tx.executeSql('insert into favorites (name) values (?, ?);',[item.id, item.name]);    
-    }, null)
+      tx.executeSql('insert into favorites (id, name, brand, product_type, image_link, product_link) values (?, ?, ?, ?, ?, ?);',[item.id, item.name, item.brand, item.product_type, item.image_link, item.product_link]);    
+    }, (error) => console.log(error), () => console.log('insert onnistui'));
+  } else {
+    db.transaction(tx => {
+      tx.executeSql('delete from favorites where id=?;',[item.id]);
+    }, (error) => console.log(error), () => console.log('delete onnistui'));    
+  }
 
     setFavorite(favo);
   }
