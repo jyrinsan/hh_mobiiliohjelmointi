@@ -23,7 +23,8 @@ export default function FavoriteScreen({ route, navigation}) {
   }
 
   const navigateToProductScreen = (id) => {
-    data.map((item) => {
+    data.map((favorite) => {
+      const item = {id: favorite.id, product_api_url: favorite.product_api_url}
       item.id === id ? navigation.navigate('Product', {item}) : '';
     })
   }

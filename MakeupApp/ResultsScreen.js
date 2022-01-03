@@ -7,7 +7,8 @@ export default function ResultsScreen({ route, navigation}) {
   const { responseData } = route.params;
 
   const navigateToProductScreen = (id) => {
-    responseData.map((item) => {
+    responseData.map((responseItem) => {
+      const item = {id: responseItem.id, product_api_url: responseItem.product_api_url}
       item.id === id ? navigation.navigate('Product', {item}) : '';
     })
   }

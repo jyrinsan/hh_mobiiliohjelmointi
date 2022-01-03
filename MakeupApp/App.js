@@ -3,6 +3,7 @@ import { StyleSheet} from 'react-native';
 import { Header } from 'react-native-elements';
 import ResultsScreen  from './ResultsScreen';
 import ProductScreen  from './ProductScreen';
+import ProductWebView  from './ProductWebView';
 import HomeScreen from './HomeScreen';
 import SearchScreen from './SearchScreen';
 import FavoriteScreen from './FavoriteScreen';
@@ -21,6 +22,7 @@ function SearchStackScreen() {
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen name="Results" component={ResultsScreen} />
         <Stack.Screen name="Product" component={ProductScreen} />
+        <Stack.Screen name="ProductWebView" component={ProductWebView} />
       </Stack.Navigator>
   );
 }
@@ -30,6 +32,7 @@ function FavoriteStackScreen() {
       <Stack2.Navigator>
         <Stack2.Screen name="Favorites" component={FavoriteScreen} />
         <Stack2.Screen name="Product" component={ProductScreen} />
+        <Stack.Screen name="ProductWebView" component={ProductWebView} />
       </Stack2.Navigator>
   );
 }

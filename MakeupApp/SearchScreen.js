@@ -19,12 +19,6 @@ export default function SearchScreen({navigation}) {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
 
-  useEffect(() =>{
-    db.transaction(tx => {
-      tx.executeSql('create table if not exists favorites (id integer primary key not null, name text);');
-    });
-    }, []);
-
   const navigateToResults = ()  => {
     fetch(`http://makeup-api.herokuapp.com/api/v1/products.json?brand=${selectedBrand}&product_type=${selectedProductType}&category=${selectedCategory}&tag=${selectedTag}`)
     .then(response=> response.json())
@@ -32,7 +26,6 @@ export default function SearchScreen({navigation}) {
       navigation.navigate('Results', {responseData});
     })
     .catch (err=> Alert.alert('Error', err ))  
-    
   }
 
   const brands = [
