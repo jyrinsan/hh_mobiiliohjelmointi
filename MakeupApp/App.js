@@ -19,10 +19,27 @@ const Stack2 = createStackNavigator();
 function SearchStackScreen() {
   return (
       <Stack.Navigator>
-        <Stack.Screen name="Search" component={SearchScreen} />
-        <Stack.Screen name="Results" component={ResultsScreen} />
-        <Stack.Screen name="Product" component={ProductScreen} />
-        <Stack.Screen name="ProductWebView" component={ProductWebView} />
+        <Stack.Screen name="Search" component={SearchScreen} options={{
+          headerStyle: {
+            backgroundColor: "pink",
+          },
+
+        }}/>
+        <Stack.Screen name="Results" component={ResultsScreen} options={{
+          headerStyle: {
+            backgroundColor: "pink",
+          },
+        }}/>
+        <Stack.Screen name="Product" component={ProductScreen} options={{
+          headerStyle: {
+            backgroundColor: "pink",
+          },
+        }}/>
+        <Stack.Screen name="ProductWebView" component={ProductWebView} options={{
+          headerStyle: {
+            backgroundColor: "pink",
+          },
+        }}/>
       </Stack.Navigator>
   );
 }
@@ -30,9 +47,21 @@ function SearchStackScreen() {
 function FavoriteStackScreen() {
   return (
       <Stack2.Navigator>
-        <Stack2.Screen name="Favorites" component={FavoriteScreen} />
-        <Stack2.Screen name="Product" component={ProductScreen} />
-        <Stack.Screen name="ProductWebView" component={ProductWebView} />
+        <Stack2.Screen name="Favorites" component={FavoriteScreen} options={{
+          headerStyle: {
+            backgroundColor: "pink",
+          },
+        }}/>
+        <Stack2.Screen name="Product" component={ProductScreen} options={{
+          headerStyle: {
+            backgroundColor: "pink",
+          },
+        }}/>
+        <Stack.Screen name="ProductWebView" component={ProductWebView} options={{
+          headerStyle: {
+            backgroundColor: "pink",
+          },
+        }}/>
       </Stack2.Navigator>
   );
 }
@@ -41,12 +70,18 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <Header
+        backgroundColor="violet"
+        placement="center"
+        centerComponent={{ text: 'MakeUp App', style: { fontSize: 30 } }}
+      />
       <Tab.Navigator>
         <Tab.Screen name="Home" component={HomeScreen} options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-home" color={color} size={size} />
           ),
+          headerShown: false
         }}
         />
         <Tab.Screen name="SearchStack" component={SearchStackScreen} options={{
@@ -54,14 +89,14 @@ export default function App() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-search" color={color} size={size} />
           ),
-          headerShown: false,
+          headerShown: false
         }}/>
         <Tab.Screen name="FavoriteStack" component={FavoriteStackScreen} options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-heart" color={color} size={size} />
           ),
-          headerShown: false,
+          headerShown: false
         }}/>
       </Tab.Navigator>
     </NavigationContainer>

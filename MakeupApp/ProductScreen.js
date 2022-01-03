@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, StatusBar, View, ScrollView} from 'react-native';
+import { StyleSheet, StatusBar, View, ScrollView, ToastAndroid} from 'react-native';
 import { Button, Icon, Rating, Text, useTheme, Card, PricingCard, FAB} from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
@@ -16,6 +16,10 @@ export default function ProductScreen({ route, navigation}) {
     findFavorite();
     findProduct();
   }, [item]);
+
+  const showToast = (text) => {
+    ToastAndroid.show(text, ToastAndroid.SHORT);
+  };
 
   const findFavorite = () => {
     db.transaction(tx => {
@@ -45,10 +49,12 @@ export default function ProductScreen({ route, navigation}) {
     db.transaction(tx => {
       tx.executeSql('insert into favorites (id, name, brand, product_type, image_link, product_api_url) values (?, ?, ?, ?, ?, ?);',[product.id, product.name, product.brand, product.product_type, product.image_link, product.product_api_url]);    
     }, (error) => console.log(error), () => console.log('insert onnistui'));
+    showToast('Added to favorites');
   } else {
     db.transaction(tx => {
       tx.executeSql('delete from favorites where id=?;',[item.id]);
     }, (error) => console.log(error), () => console.log('delete onnistui'));    
+    showToast('Removed from favorites');
   }
 
     setFavorite(favo);

@@ -1,59 +1,82 @@
 import React, {useEffect} from 'react';
 import { StyleSheet, View, FlatList} from 'react-native';
-import { Tile, Image, Text } from 'react-native-elements';
+import { Image, useTheme } from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('makeupdb.db');
 
 export default function HomeScreen() {
 
+  const { theme } = useTheme();
+
   useEffect(() =>{
     db.transaction(tx => {
-      tx.executeSql('drop table if exists favorites;');
-    },(error) => console.log(error), console.log('table dropped'));
-    db.transaction(tx => {
       tx.executeSql('create table if not exists favorites (id integer primary key not null, name text, brand text, product_type text, image_link text, product_api_url);');
-    },(error) => console.log(error), console.log('table created'));
-  });
+    },(error) => console.log(error), null);
+  }, []);
 
   const images = [
-    {id: 1, uri: 'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png'},
-    {id: 2, uri: 'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png'},
-    {id: 3, uri: 'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png'},
-    {id: 4, uri: 'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png'},
-    {id: 5, uri: 'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png'},
-    {id: 6, uri: 'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png'}
+    'http://makeup-api.herokuapp.com/assets/brushes-6d2ab84631ecd47ced4fa07c47eb37521eb61c5a525965dafaf308f21338aa44.png',
+    'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png',
+    'http://makeup-api.herokuapp.com/assets/nail-polish-4c7ee1a5f7a5cbaff9757c3bcfa4f6e89d7a6f2ffc49d267e04e010ba94cfd7c.png',
+    'http://makeup-api.herokuapp.com/assets/single-pot-4ce398e7d8c527ef248ace7a783cc52fd583375a25a7dcdb7b16f7a0958ccb17.png',
+    'http://makeup-api.herokuapp.com/assets/eyeshadow-18fa4bed267bec6a67506150d9574259d0dcc67700e69de4ba720d9afe8204a2.png',
+    'http://makeup-api.herokuapp.com/assets/brushes-6d2ab84631ecd47ced4fa07c47eb37521eb61c5a525965dafaf308f21338aa44.png',
+    'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png',
+    'http://makeup-api.herokuapp.com/assets/nail-polish-4c7ee1a5f7a5cbaff9757c3bcfa4f6e89d7a6f2ffc49d267e04e010ba94cfd7c.png',
+    'http://makeup-api.herokuapp.com/assets/single-pot-4ce398e7d8c527ef248ace7a783cc52fd583375a25a7dcdb7b16f7a0958ccb17.png',
+    'http://makeup-api.herokuapp.com/assets/eyeshadow-18fa4bed267bec6a67506150d9574259d0dcc67700e69de4ba720d9afe8204a2.png',
+    'http://makeup-api.herokuapp.com/assets/brushes-6d2ab84631ecd47ced4fa07c47eb37521eb61c5a525965dafaf308f21338aa44.png',
+    'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png',
+    'http://makeup-api.herokuapp.com/assets/nail-polish-4c7ee1a5f7a5cbaff9757c3bcfa4f6e89d7a6f2ffc49d267e04e010ba94cfd7c.png',
+    'http://makeup-api.herokuapp.com/assets/single-pot-4ce398e7d8c527ef248ace7a783cc52fd583375a25a7dcdb7b16f7a0958ccb17.png',
+    'http://makeup-api.herokuapp.com/assets/eyeshadow-18fa4bed267bec6a67506150d9574259d0dcc67700e69de4ba720d9afe8204a2.png',
+    'http://makeup-api.herokuapp.com/assets/brushes-6d2ab84631ecd47ced4fa07c47eb37521eb61c5a525965dafaf308f21338aa44.png',
+    'http://makeup-api.herokuapp.com/assets/lips-c35ec4a3350ec779c6bf6a785981ad9ef2e21bd9fe26a2be1c766d56edb2e11f.png',
+    'http://makeup-api.herokuapp.com/assets/nail-polish-4c7ee1a5f7a5cbaff9757c3bcfa4f6e89d7a6f2ffc49d267e04e010ba94cfd7c.png',
+    'http://makeup-api.herokuapp.com/assets/single-pot-4ce398e7d8c527ef248ace7a783cc52fd583375a25a7dcdb7b16f7a0958ccb17.png',
+    'http://makeup-api.herokuapp.com/assets/eyeshadow-18fa4bed267bec6a67506150d9574259d0dcc67700e69de4ba720d9afe8204a2.png',
   ]
 
   return (
-    <View>
-      <Text>{images[0].uri}</Text>
+    <View style={styles.container}>
       <FlatList
         data={images}
-        renderItem={(item) => 
-          <Image
-          source={{
-            uri:
-              item.uri,
-          }}
-          style={{width: 200, height: 200}}
-        />}
-        keyExtractor={(item) => item.id}
-        numColumns = {2}
+        renderItem={({item}) => (
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'column',
+              margin: 1
+            }}>
+            <Image
+              style={styles.imageThumbnail}
+              source={{uri: item}}
+            />
+          </View>
+        )}
+        //Setting the number of column
+        numColumns={3}
+        keyExtractor={(item, index) => index}
       />
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-list: {
-  width: '100%',
-  backgroundColor: '#000',
-},
-item: {
-  aspectRatio: 1,
-  width: '100%',
-  flex: 1,
-},
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'pink',
+  },
+  imageThumbnail: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 100,
+  },
+  text: {
+    textAlign: 'center',
+    padding: 5,
+    fontFamily: 'Cochin'
+  },
 });

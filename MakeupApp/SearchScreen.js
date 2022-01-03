@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Alert } from 'react-native';
-import{ Header } from 'react-native-elements';
+import React, {useState} from 'react';
+import { Alert } from 'react-native';
 import {
   Select,
   VStack,
