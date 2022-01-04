@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, StatusBar, View, Text, FlatList } from 'react-native';
-import { Input, Button, ListItem, Avatar, Icon } from 'react-native-elements';
+import { StyleSheet, StatusBar, View, FlatList } from 'react-native';
+import { ListItem, Avatar } from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('makeupdb.db');
@@ -31,7 +31,7 @@ export default function FavoriteScreen({ route, navigation}) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttoncontainer}>
+      <View style={styles.listcontainer}>
       {data &&
       <FlatList 
             keyExtractor={item => item.id}
@@ -64,12 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  map: {
-    flex: 1,
-    width: "100%",
-    height: "100%"
-  },
-  buttoncontainer: {
+  listcontainer: {
     flexDirection:'row',
     alignItems: 'center',
     justifyContent:'center',

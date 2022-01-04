@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, StatusBar, View, ScrollView, ToastAndroid} from 'react-native';
-import { Button, Icon, Rating, Text, useTheme, Card, PricingCard, FAB} from 'react-native-elements';
+import { StyleSheet, View, ScrollView, ToastAndroid} from 'react-native';
+import { Icon, Rating, Text, useTheme, Card, PricingCard, FAB} from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('makeupdb.db');
@@ -25,7 +25,7 @@ export default function ProductScreen({ route, navigation}) {
     db.transaction(tx => {
       tx.executeSql('select * from favorites where id=?;', [item.id], (_, {rows}) => {
         setFavorite(rows._array.length>0)
-        }, () => console.log('find error'), () => console.log('find onnistui')
+        }, (err) => Alert.alert('Error', err ), (null)
       ); 
     });
   }
@@ -34,7 +34,6 @@ export default function ProductScreen({ route, navigation}) {
     fetch(item.product_api_url)
       .then(response=> response.json())
       .then(responseData=> {
-        console.log("avataan product", responseData)
         setProduct(responseData);
       })
       .catch (err=> Alert.alert('Error', err ))  
@@ -48,12 +47,12 @@ export default function ProductScreen({ route, navigation}) {
     if (favo) {
     db.transaction(tx => {
       tx.executeSql('insert into favorites (id, name, brand, product_type, image_link, product_api_url) values (?, ?, ?, ?, ?, ?);',[product.id, product.name, product.brand, product.product_type, product.image_link, product.product_api_url]);    
-    }, (error) => console.log(error), () => console.log('insert onnistui'));
+    }, err=> Alert.alert('Error', err ), null);
     showToast('Added to favorites');
   } else {
     db.transaction(tx => {
       tx.executeSql('delete from favorites where id=?;',[item.id]);
-    }, (error) => console.log(error), () => console.log('delete onnistui'));    
+    }, err=> Alert.alert('Error', err ), () => null);    
     showToast('Removed from favorites');
   }
 
@@ -118,11 +117,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'pink',
-  },
-  cardcontainer: {
-    flexDirection:'row',
-    alignItems: 'center',
-    justifyContent:'center',
   },
   text: {
     textAlign: 'center',

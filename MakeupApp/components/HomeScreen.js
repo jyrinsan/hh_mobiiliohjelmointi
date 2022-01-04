@@ -1,18 +1,16 @@
 import React, {useEffect} from 'react';
 import { StyleSheet, View, FlatList} from 'react-native';
-import { Image, useTheme } from 'react-native-elements';
+import { Image } from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('makeupdb.db');
 
 export default function HomeScreen() {
 
-  const { theme } = useTheme();
-
   useEffect(() =>{
     db.transaction(tx => {
       tx.executeSql('create table if not exists favorites (id integer primary key not null, name text, brand text, product_type text, image_link text, product_api_url);');
-    },(error) => console.log(error), null);
+    },err=> Alert.alert('Error', err ), null);
   }, []);
 
   const images = [
@@ -73,10 +71,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 100,
-  },
-  text: {
-    textAlign: 'center',
-    padding: 5,
-    fontFamily: 'Cochin'
   },
 });

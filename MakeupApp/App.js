@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet} from 'react-native';
 import { Header } from 'react-native-elements';
-import ResultsScreen  from './ResultsScreen';
-import ProductScreen  from './ProductScreen';
-import ProductWebView  from './ProductWebView';
-import HomeScreen from './HomeScreen';
-import SearchScreen from './SearchScreen';
-import FavoriteScreen from './FavoriteScreen';
+import ResultsScreen  from './components/ResultsScreen';
+import ProductScreen  from './components/ProductScreen';
+import ProductWebView  from './components/ProductWebView';
+import HomeScreen from './components/HomeScreen';
+import SearchScreen from './components/SearchScreen';
+import FavoriteScreen from './components/FavoriteScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator} from'@react-navigation/bottom-tabs';
 import { createStackNavigator} from'@react-navigation/stack';
@@ -23,7 +23,6 @@ function SearchStackScreen() {
           headerStyle: {
             backgroundColor: "pink",
           },
-
         }}/>
         <Stack.Screen name="Results" component={ResultsScreen} options={{
           headerStyle: {
@@ -102,25 +101,4 @@ export default function App() {
     </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  fieldcontainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textinput: {
-    width:200 , 
-    borderColor: 'gray', 
-    borderWidth: 1,
-  },
-  buttoncontainer: {
-    flexDirection:'row',
-    alignItems: 'center',
-    justifyContent:'center',
-  },
-});
 

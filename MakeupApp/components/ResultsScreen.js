@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, StatusBar, View, TextInput, Alert, FlatList} from 'react-native';
-import { Input, Button, ListItem, Avatar } from 'react-native-elements';
+import React from 'react';
+import { StyleSheet, StatusBar, View, FlatList} from 'react-native';
+import { ListItem, Avatar } from 'react-native-elements';
 
 export default function ResultsScreen({ route, navigation}) {
 
@@ -15,7 +15,7 @@ export default function ResultsScreen({ route, navigation}) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttoncontainer}>
+      <View style={styles.listcontainer}>
       {responseData &&
       <FlatList 
             keyExtractor={item => item.id}
@@ -48,12 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  map: {
-    flex: 1,
-    width: "100%",
-    height: "100%"
-  },
-  buttoncontainer: {
+  listcontainer: {
     flexDirection:'row',
     alignItems: 'center',
     justifyContent:'center',
