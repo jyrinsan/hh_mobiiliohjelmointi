@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, ScrollView, ToastAndroid} from 'react-native';
-import { Icon, Rating, Text, useTheme, Card, PricingCard, FAB} from 'react-native-elements';
+import { Icon, Rating, Text, Card, PricingCard, FAB} from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('makeupdb.db');
@@ -10,7 +10,6 @@ export default function ProductScreen({ route, navigation}) {
   const { item } = route.params;
   const [favorite, setFavorite] = useState(false);
   const [product, setProduct] = useState();
-  const { theme } = useTheme();
 
   useEffect(() => {
     findFavorite();
