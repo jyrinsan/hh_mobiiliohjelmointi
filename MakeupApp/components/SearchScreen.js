@@ -143,7 +143,7 @@ export default function SearchScreen({navigation}) {
               maxValue={200}
               step={1}
               colorScheme="pink"
-              onChangeEnd={(value) => {
+              onChange={(value) => {
                 value && setSelectedLessThanPrice(Math.floor(value))
               }}
             >
@@ -169,7 +169,7 @@ export default function SearchScreen({navigation}) {
               maxValue={200}
               step={1}
               colorScheme="pink"
-              onChangeEnd={(value) => {
+              onChange={(value) => {
                 value && setSelectedGreaterThanPrice(Math.floor(value))
               }}
             >

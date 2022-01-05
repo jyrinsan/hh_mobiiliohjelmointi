@@ -19,26 +19,10 @@ const Stack2 = createStackNavigator();
 function SearchStackScreen() {
   return (
       <Stack.Navigator>
-        <Stack.Screen name="Search" component={SearchScreen} options={{
-          headerStyle: {
-            backgroundColor: "pink",
-          },
-        }}/>
-        <Stack.Screen name="Results" component={ResultsScreen} options={{
-          headerStyle: {
-            backgroundColor: "pink",
-          },
-        }}/>
-        <Stack.Screen name="Product" component={ProductScreen} options={{
-          headerStyle: {
-            backgroundColor: "pink",
-          },
-        }}/>
-        <Stack.Screen name="ProductWebView" component={ProductWebView} options={{
-          headerStyle: {
-            backgroundColor: "pink",
-          },
-        }}/>
+        <Stack.Screen name="Search" component={SearchScreen} />
+        <Stack.Screen name="Results" component={ResultsScreen} />
+        <Stack.Screen name="Product" component={ProductScreen} />
+        <Stack.Screen name="ProductWebView" component={ProductWebView} />
       </Stack.Navigator>
   );
 }
@@ -46,21 +30,9 @@ function SearchStackScreen() {
 function FavoriteStackScreen() {
   return (
       <Stack2.Navigator>
-        <Stack2.Screen name="Favorites" component={FavoriteScreen} options={{
-          headerStyle: {
-            backgroundColor: "pink",
-          },
-        }}/>
-        <Stack2.Screen name="Product" component={ProductScreen} options={{
-          headerStyle: {
-            backgroundColor: "pink",
-          },
-        }}/>
-        <Stack.Screen name="ProductWebView" component={ProductWebView} options={{
-          headerStyle: {
-            backgroundColor: "pink",
-          },
-        }}/>
+        <Stack2.Screen name="Favorites" component={FavoriteScreen} />
+        <Stack2.Screen name="Product" component={ProductScreen} />
+        <Stack.Screen name="ProductWebView" component={ProductWebView} />
       </Stack2.Navigator>
   );
 }
@@ -70,7 +42,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Header
-        backgroundColor="violet"
+        backgroundColor="pink"
         placement="center"
         centerComponent={{ text: 'MakeUp App', style: { fontSize: 30 } }}
       />

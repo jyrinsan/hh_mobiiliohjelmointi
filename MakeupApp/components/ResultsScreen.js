@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, StatusBar, View, FlatList} from 'react-native';
-import { ListItem, Avatar } from 'react-native-elements';
+import { ListItem, Avatar, Text } from 'react-native-elements';
 
 export default function ResultsScreen({ route, navigation}) {
 
@@ -15,8 +15,12 @@ export default function ResultsScreen({ route, navigation}) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.listcontainer}>
+      {!responseData && 
+      <View style={styles.textcontainer}>
+        <Text h4 h4Style={{color: 'pink', textAlign: 'center'}}>{'No response found !'}</Text> 
+      </View> }
       {responseData &&
+      <View style={styles.listcontainer}>
       <FlatList 
             keyExtractor={item => item.id}
             data={responseData} 
@@ -36,8 +40,8 @@ export default function ResultsScreen({ route, navigation}) {
                 </ListItem.Content>
                 <ListItem.Chevron />
               </ListItem>
-              )} /> }
-      </View>
+              )} /> 
+      </View> }
     </View>
   );
 }
@@ -50,6 +54,10 @@ const styles = StyleSheet.create({
   },
   listcontainer: {
     flexDirection:'row',
+    alignItems: 'center',
+    justifyContent:'center',
+  },
+  textcontainer: {
     alignItems: 'center',
     justifyContent:'center',
   },
